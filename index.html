@@ -4,60 +4,88 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barangay Management System</title>
-
 <style>
 *{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f3f6f4;color:#26352b}
-.sidebar{width:240px;background:#145c35;color:white;position:fixed;inset:0 auto 0 0;padding:22px 14px;overflow:auto}
-.sidebar h2{text-align:center;font-size:19px;margin:8px 0 28px}
-.nav{display:block;width:100%;padding:13px 15px;margin:5px 0;border:0;border-radius:7px;background:transparent;color:white;text-align:left;font-size:15px;cursor:pointer}
+body{margin:0;background:#f2f5f3;color:#26352b}
+.hidden{display:none!important}
+.auth{width:min(420px,92%);margin:7vh auto;background:white;padding:28px;border-radius:12px;box-shadow:0 4px 20px #0001}
+.auth h2{text-align:center;color:#17663a}
+.auth button{width:100%;margin-top:8px}
+.auth-link{text-align:center;margin-top:18px}
+.auth-link a{color:#17663a;cursor:pointer;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;margin:6px 0 14px;border:1px solid #ccd5ce;border-radius:6px}
+label{font-size:14px;font-weight:bold}
+button{background:#17663a;color:white;border:0;padding:11px 15px;border-radius:6px;cursor:pointer}
+button:hover{background:#104b2a}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:235px;background:#145c35;color:white;padding:20px 14px;overflow-y:auto}
+.sidebar h2{text-align:center;font-size:19px;margin:10px 0 28px}
+.nav{display:block;width:100%;text-align:left;background:transparent;margin:5px 0;padding:13px;border-radius:7px}
 .nav:hover,.nav.active{background:#26834d}
-.main{margin-left:240px;padding:28px}
-header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
-header h1{margin:0;font-size:26px}
-header p{color:#718078;margin-bottom:0}
+.main{margin-left:235px;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}
+header h1{margin:0}
+header p{color:#718078}
 .card{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 8px #0000000c;margin-bottom:18px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
 .stat h3{font-size:14px;color:#68776e}
 .stat strong{font-size:30px;color:#17663a}
-button,.btn{background:#17663a;color:white;border:0;padding:10px 15px;border-radius:6px;cursor:pointer}
-button:hover,.btn:hover{background:#104b2a}
-input,select,textarea{padding:11px;border:1px solid #ccd5ce;border-radius:6px;width:100%;margin:6px 0 13px}
-label{font-size:14px;font-weight:bold}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-table{width:100%;border-collapse:collapse;margin-top:15px;min-width:600px}
-th,td{padding:12px;border-bottom:1px solid #e4e9e5;text-align:left;font-size:14px}
-th{background:#edf5ef}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
 .table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:570px;margin-top:12px}
+th,td{padding:11px;border-bottom:1px solid #e4e9e5;text-align:left;font-size:14px}
+th{background:#edf5ef}
 .danger{background:#b83232}
 .secondary{background:#65736a}
 .small{padding:6px 9px;font-size:12px}
-.notice{color:#68776e;font-size:13px}
-.hidden{display:none}
-#loginScreen{max-width:380px;margin:10vh auto}
-#loginScreen h2{text-align:center;color:#17663a}
+.notice{font-size:13px;color:#718078}
 @media(max-width:700px){
 .sidebar{position:relative;width:100%;height:auto}
 .sidebar h2{margin-bottom:12px}
-.main{margin:0;padding:16px}
+.main{margin:0;padding:15px}
 header{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
-
 <body>
 
-<div id="loginScreen" class="card">
-<h2>BARANGAY MANAGEMENT SYSTEM</h2>
-<p>Administrator Login</p>
+<!-- CREATE ACCOUNT -->
+<div id="registerScreen" class="auth hidden">
+<h2>Create Account</h2>
+<p>Create your Barangay Management System account.</p>
+<form id="registerForm">
+<label>Full Name</label>
+<input id="regName" required>
 <label>Username</label>
-<input id="loginUser" placeholder="Enter username">
+<input id="regUsername" required minlength="4">
 <label>Password</label>
-<input id="loginPass" type="password" placeholder="Enter password">
-<button onclick="login()">Login</button>
-<p class="notice">Demo account: admin / admin123</p>
+<input id="regPassword" type="password" required minlength="6">
+<label>Confirm Password</label>
+<input id="regConfirm" type="password" required minlength="6">
+<button type="submit">Create Account</button>
+</form>
+<div class="auth-link">
+Already have an account? <a onclick="showLogin()">Login here</a>
+</div>
 </div>
 
+<!-- LOGIN -->
+<div id="loginScreen" class="auth">
+<h2>Barangay Management System</h2>
+<p style="text-align:center">Login to your account</p>
+<form id="loginForm">
+<label>Username</label>
+<input id="loginUsername" required>
+<label>Password</label>
+<input id="loginPassword" type="password" required>
+<button type="submit">Login</button>
+</form>
+<div class="auth-link">
+No account yet? <a onclick="showRegister()">Create Account</a>
+</div>
+<p class="notice" style="text-align:center">Use the account you registered.</p>
+</div>
+
+<!-- MAIN APPLICATION -->
 <div id="application" class="hidden">
 <aside class="sidebar">
 <h2>BARANGAY SYSTEM</h2>
@@ -70,243 +98,314 @@ header{align-items:flex-start;flex-direction:column}
 <button class="nav" data-page="settings">Settings</button>
 <button class="nav" onclick="logout()">Logout</button>
 </aside>
-
 <main class="main">
 <header>
 <div>
 <h1 id="pageTitle">Dashboard</h1>
 <p>Barangay Management System</p>
 </div>
-<div id="currentUser">Administrator</div>
+<div id="welcomeUser"></div>
 </header>
 <div id="content"></div>
 </main>
 </div>
 
 <script>
-const getData = key => JSON.parse(localStorage.getItem(key) || "[]");
-const saveData = (key,data) => localStorage.setItem(key,JSON.stringify(data));
+const read=(key)=>JSON.parse(localStorage.getItem(key)||"[]");
+const write=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
 
-let residents=getData("bms_residents");
-let documents=getData("bms_documents");
-let transactions=getData("bms_transactions");
-let users=getData("bms_users");
-let settings=JSON.parse(localStorage.getItem("bms_settings") || '{"name":"Barangay Office","address":"","contact":""}');
-
-let loggedIn=sessionStorage.getItem("bms_logged") === "yes";
+let accounts=read("bms_accounts");
+let residents=read("bms_residents");
+let documents=read("bms_documents");
+let transactions=read("bms_transactions");
 let currentPage="dashboard";
 
-function showApp(){
- document.getElementById("loginScreen").classList.add("hidden");
- document.getElementById("application").classList.remove("hidden");
- document.getElementById("currentUser").textContent=sessionStorage.getItem("bms_user") || "Administrator";
- render();
+let settings=JSON.parse(localStorage.getItem("bms_settings")||
+'{"name":"Barangay Office","address":"","contact":""}');
+
+function showOnly(id){
+["registerScreen","loginScreen","application"].forEach(x=>
+document.getElementById(x).classList.add("hidden"));
+document.getElementById(id).classList.remove("hidden");
 }
-function login(){
- let u=document.getElementById("loginUser").value.trim();
- let p=document.getElementById("loginPass").value;
- if(u==="admin" && p==="admin123"){
-  sessionStorage.setItem("bms_logged","yes");
-  sessionStorage.setItem("bms_user","Administrator");
-  loggedIn=true;showApp();
- }else alert("Incorrect username or password.");
+function showRegister(){showOnly("registerScreen")}
+function showLogin(){showOnly("loginScreen")}
+
+document.getElementById("registerForm").addEventListener("submit",function(e){
+e.preventDefault();
+let name=document.getElementById("regName").value.trim();
+let username=document.getElementById("regUsername").value.trim();
+let password=document.getElementById("regPassword").value;
+let confirmPassword=document.getElementById("regConfirm").value;
+
+if(password!==confirmPassword){
+alert("Passwords do not match.");return;
+}
+if(accounts.some(a=>a.username.toLowerCase()===username.toLowerCase())){
+alert("Username already exists.");return;
+}
+accounts.push({id:Date.now(),name,username,password,role:"Administrator"});
+write("bms_accounts",accounts);
+alert("Account created successfully! Please log in.");
+document.getElementById("loginUsername").value=username;
+document.getElementById("registerForm").reset();
+showLogin();
+});
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+e.preventDefault();
+let username=document.getElementById("loginUsername").value.trim();
+let password=document.getElementById("loginPassword").value;
+
+let account=accounts.find(a=>
+a.username.toLowerCase()===username.toLowerCase()&&a.password===password);
+
+if(!account){alert("Incorrect username or password.");return;}
+
+sessionStorage.setItem("bms_logged","yes");
+sessionStorage.setItem("bms_current",account.username);
+sessionStorage.setItem("bms_name",account.name);
+openApplication();
+});
+
+function openApplication(){
+showOnly("application");
+document.getElementById("welcomeUser").textContent=
+"Welcome, "+(sessionStorage.getItem("bms_name")||"User");
+render();
 }
 function logout(){
- sessionStorage.removeItem("bms_logged");
- sessionStorage.removeItem("bms_user");
- location.reload();
+sessionStorage.clear();
+document.getElementById("loginForm").reset();
+showLogin();
 }
-function navigate(page){
- currentPage=page;
- document.querySelectorAll(".nav[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
- render();
-}
-document.querySelectorAll(".nav[data-page]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.page)));
 
-function saveAll(){
- saveData("bms_residents",residents);
- saveData("bms_documents",documents);
- saveData("bms_transactions",transactions);
- saveData("bms_users",users);
- localStorage.setItem("bms_settings",JSON.stringify(settings));
+document.querySelectorAll(".nav[data-page]").forEach(button=>{
+button.addEventListener("click",()=>navigate(button.dataset.page));
+});
+
+function navigate(page){
+currentPage=page;
+document.querySelectorAll(".nav[data-page]").forEach(b=>
+b.classList.toggle("active",b.dataset.page===page));
+render();
 }
-function escapeHTML(value){
- return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function saveAll(){
+write("bms_residents",residents);
+write("bms_documents",documents);
+write("bms_transactions",transactions);
+localStorage.setItem("bms_settings",JSON.stringify(settings));
+}
+function safe(v){
+return String(v??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+}
+function stat(title,value){
+return <div class="card stat"><h3>${title}</h3><strong>${value}</strong></div>;
 }
 function table(headers,rows){
- return <div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>).join("")}</tr></thead><tbody>${rows || <tr><td colspan="${headers.length}">No records found.</td></tr>`}</tbody></table></div>;
+return `<div class="table-wrap"><table><thead><tr>
+${headers.map(h=>`<th>${h}</th>`).join("")}
+</tr></thead><tbody>${rows||`<tr><td colspan="${headers.length}">No records found.</td></tr>`}</tbody></table></div>`;
 }
-function render(){
- const c=document.getElementById("content");
- const titles={dashboard:"Dashboard",residents:"Residents",documents:"Documents",transactions:"Transactions",reports:"Reports",users:"User Management",settings:"Settings"};
- document.getElementById("pageTitle").textContent=titles[currentPage];
 
- if(currentPage==="dashboard"){
- c.innerHTML=`
- <div class="card" style="background:#17663a;color:white">
- <h2>Welcome to ${escapeHTML(settings.name)}!</h2>
- <p>Manage your barangay records in one place.</p></div>
- <div class="stats">
- ${stat("Total Residents",residents.length)}
- ${stat("Document Requests",documents.length)}
- ${stat("Transactions",transactions.length)}
- ${stat("Registered Users",users.length)}
- </div>
- <div class="card"><h3>Quick Access</h3>
- <button onclick="navigate('residents')">Manage Residents</button>
- <button onclick="navigate('documents')">Documents</button>
- <button onclick="navigate('transactions')">Transactions</button>
- <button onclick="navigate('reports')">View Reports</button>
- </div>`;
- }
- if(currentPage==="residents") renderResidents(c);
- if(currentPage==="documents") renderDocuments(c);
- if(currentPage==="transactions") renderTransactions(c);
- if(currentPage==="reports") renderReports(c);
- if(currentPage==="users") renderUsers(c);
- if(currentPage==="settings") renderSettings(c);
+function render(){
+let c=document.getElementById("content");
+let titles={
+dashboard:"Dashboard",residents:"Residents",documents:"Documents",
+transactions:"Transactions",reports:"Reports",users:"User Management",
+settings:"Settings"
+};
+document.getElementById("pageTitle").textContent=titles[currentPage];
+
+if(currentPage==="dashboard"){
+c.innerHTML=`
+<div class="card" style="background:#17663a;color:white">
+<h2>Welcome to ${safe(settings.name)}!</h2>
+<p>Manage your barangay records in one place.</p></div>
+<div class="stats">
+${stat("Total Residents",residents.length)}
+${stat("Document Requests",documents.length)}
+${stat("Transactions",transactions.length)}
+${stat("Registered Accounts",accounts.length)}
+</div>
+<div class="card"><h3>Quick Access</h3>
+<button onclick="navigate('residents')">Residents</button>
+<button onclick="navigate('documents')">Documents</button>
+<button onclick="navigate('transactions')">Transactions</button>
+<button onclick="navigate('reports')">Reports</button>
+</div>`;
 }
-function stat(name,value){
- return <div class="card stat"><h3>${name}</h3><strong>${value}</strong></div>;
+
+if(currentPage==="residents")renderResidents(c);
+if(currentPage==="documents")renderDocuments(c);
+if(currentPage==="transactions")renderTransactions(c);
+if(currentPage==="reports")renderReports(c);
+if(currentPage==="users")renderUsers(c);
+if(currentPage==="settings")renderSettings(c);
 }
 
 function renderResidents(c){
- c.innerHTML=`
- <div class="card"><h3>Add Resident</h3>
- <form id="residentForm">
- <div class="form-grid">
- <div><label>Full Name</label><input name="name" required></div>
- <div><label>Age</label><input name="age" type="number" min="0" required></div>
- <div><label>Address</label><input name="address" required></div>
- <div><label>Contact Number</label><input name="contact"></div>
- </div><button>Add Resident</button></form></div>
- <div class="card"><h3>Resident Records</h3>
- <input id="residentSearch" placeholder="Search resident..." oninput="filterResidents()">
- <div id="residentTable"></div></div>`;
- document.getElementById("residentForm").onsubmit=e=>{
- e.preventDefault();let f=new FormData(e.target);
- residents.push({id:Date.now(),name:f.get("name"),age:f.get("age"),address:f.get("address"),contact:f.get("contact")});
- saveAll();renderResidents(c);renderDashboardStats();
- };
- drawResidents();
+c.innerHTML=`
+<div class="card"><h3>Add Resident</h3>
+<form id="residentForm">
+<div class="grid">
+<div><label>Full Name</label><input name="name" required></div>
+<div><label>Age</label><input name="age" type="number" min="0" required></div>
+<div><label>Address</label><input name="address" required></div>
+<div><label>Contact Number</label><input name="contact"></div>
+</div><button>Add Resident</button></form></div>
+<div class="card"><h3>Resident Records</h3>
+<input id="residentSearch" placeholder="Search resident..." >
+<div id="residentTable"></div></div>`;
+
+document.getElementById("residentForm").onsubmit=e=>{
+e.preventDefault();let f=new FormData(e.target);
+residents.push({id:Date.now(),name:f.get("name"),age:f.get("age"),
+address:f.get("address"),contact:f.get("contact")});
+saveAll();render();
+};
+document.getElementById("residentSearch").oninput=filterResidents;
+drawResidents();
 }
 function drawResidents(list=residents){
- document.getElementById("residentTable").innerHTML=table(["Name","Age","Address","Contact","Action"],list.map(r=>`<tr>
- <td>${escapeHTML(r.name)}</td><td>${escapeHTML(r.age)}</td><td>${escapeHTML(r.address)}</td><td>${escapeHTML(r.contact)}</td>
- <td><button class="danger small" onclick="deleteResident(${r.id})">Delete</button></td></tr>`).join(""));
+let el=document.getElementById("residentTable");if(!el)return;
+el.innerHTML=table(["Name","Age","Address","Contact","Action"],
+list.map(r=>`<tr><td>${safe(r.name)}</td><td>${safe(r.age)}</td>
+<td>${safe(r.address)}</td><td>${safe(r.contact)}</td>
+<td><button class="danger small" onclick="deleteResident(${r.id})">Delete</button></td></tr>`).join(""));
 }
 function filterResidents(){
- let q=document.getElementById("residentSearch").value.toLowerCase();
- drawResidents(residents.filter(r=>(r.name+" "+r.address).toLowerCase().includes(q)));
+let q=document.getElementById("residentSearch").value.toLowerCase();
+drawResidents(residents.filter(r=>(r.name+" "+r.address).toLowerCase().includes(q)));
 }
 function deleteResident(id){
- if(confirm("Delete this resident?")){residents=residents.filter(r=>r.id!==id);saveAll();render();}
-}
+if(confirm("Delete this resident?")){
+residents=residents.filter(r=>r.id!==id);saveAll();render();
+}}
 
 function renderDocuments(c){
- c.innerHTML=`
- <div class="card"><h3>New Document Request</h3>
- <form id="documentForm"><div class="form-grid">
- <div><label>Resident Name</label><input name="name" required></div>
- <div><label>Document Type</label><select name="type"><option>Barangay Clearance</option><option>Certificate of Residency</option><option>Certificate of Indigency</option><option>Business Clearance</option></select></div>
- <div><label>Purpose</label><input name="purpose" required></div>
- </div><button>Submit Request</button></form></div>
- <div class="card"><h3>Document Requests</h3><div id="documentTable"></div></div>`;
- document.getElementById("documentForm").onsubmit=e=>{
- e.preventDefault();let f=new FormData(e.target);
- documents.push({id:Date.now(),name:f.get("name"),type:f.get("type"),purpose:f.get("purpose"),status:"Pending"});
- saveAll();render();
- };
- drawDocuments();
+c.innerHTML=`
+<div class="card"><h3>New Document Request</h3>
+<form id="documentForm"><div class="grid">
+<div><label>Resident Name</label><input name="name" required></div>
+<div><label>Document Type</label>
+<select name="type">
+<option>Barangay Clearance</option>
+<option>Certificate of Residency</option>
+<option>Certificate of Indigency</option>
+<option>Business Clearance</option>
+</select></div>
+<div><label>Purpose</label><input name="purpose" required></div>
+</div><button>Submit Request</button></form></div>
+<div class="card"><h3>Document Requests</h3><div id="documentTable"></div></div>`;
+
+document.getElementById("documentForm").onsubmit=e=>{
+e.preventDefault();let f=new FormData(e.target);
+documents.push({id:Date.now(),name:f.get("name"),type:f.get("type"),
+purpose:f.get("purpose"),status:"Pending"});
+saveAll();render();
+};
+drawDocuments();
 }
 function drawDocuments(){
- document.getElementById("documentTable").innerHTML=table(["Resident","Document","Purpose","Status","Action"],documents.map(d=>`<tr>
- <td>${escapeHTML(d.name)}</td><td>${escapeHTML(d.type)}</td><td>${escapeHTML(d.purpose)}</td>
- <td><select onchange="updateDocument(${d.id},this.value)"><option ${d.status==="Pending"?"selected":""}>Pending</option><option ${d.status==="Approved"?"selected":""}>Approved</option><option ${d.status==="Released"?"selected":""}>Released</option><option ${d.status==="Rejected"?"selected":""}>Rejected</option></select></td>
- <td><button class="danger small" onclick="deleteDocument(${d.id})">Delete</button></td></tr>`).join(""));
+let el=document.getElementById("documentTable");if(!el)return;
+el.innerHTML=table(["Resident","Document","Purpose","Status","Action"],
+documents.map(d=>`<tr><td>${safe(d.name)}</td><td>${safe(d.type)}</td>
+<td>${safe(d.purpose)}</td><td><select onchange="updateDocument(${d.id},this.value)">
+${["Pending","Approved","Released","Rejected"].map(s=>
+<option ${d.status===s?"selected":""}>${s}</option>).join("")}
+</select></td><td><button class="danger small" onclick="deleteDocument(${d.id})">Delete</button></td></tr>`).join(""));
 }
-function updateDocument(id,status){documents=documents.map(d=>d.id===id?{...d,status}:d);saveAll();}
-function deleteDocument(id){if(confirm("Delete request?")){documents=documents.filter(d=>d.id!==id);saveAll();render();}}
+function updateDocument(id,status){
+documents=documents.map(d=>d.id===id?{...d,status}:d);saveAll();
+}
+function deleteDocument(id){
+if(confirm("Delete this request?")){
+documents=documents.filter(d=>d.id!==id);saveAll();render();
+}}
 
 function renderTransactions(c){
- c.innerHTML=`
- <div class="card"><h3>Add Transaction</h3>
- <form id="transactionForm"><div class="form-grid">
- <div><label>Resident / Customer</label><input name="name" required></div>
- <div><label>Transaction Type</label><input name="type" placeholder="e.g. Payment" required></div>
- <div><label>Amount (₱)</label><input name="amount" type="number" min="0" step="0.01" required></div>
- <div><label>Date</label><input name="date" type="date" required></div>
- </div><button>Save Transaction</button></form></div>
- <div class="card"><h3>Transaction History</h3><div id="transactionTable"></div></div>`;
- document.getElementById("transactionForm").onsubmit=e=>{
- e.preventDefault();let f=new FormData(e.target);
- transactions.push({id:Date.now(),name:f.get("name"),type:f.get("type"),amount:Number(f.get("amount")),date:f.get("date")});
- saveAll();render();
- };
- drawTransactions();
+c.innerHTML=`
+<div class="card"><h3>Add Transaction</h3>
+<form id="transactionForm"><div class="grid">
+<div><label>Resident / Customer</label><input name="name" required></div>
+<div><label>Transaction Type</label><input name="type" required></div>
+<div><label>Amount (₱)</label><input name="amount" type="number" min="0" step=".01" required></div>
+<div><label>Date</label><input name="date" type="date" required></div>
+</div><button>Save Transaction</button></form></div>
+<div class="card"><h3>Transaction History</h3><div id="transactionTable"></div></div>`;
+
+document.getElementById("transactionForm").onsubmit=e=>{
+e.preventDefault();let f=new FormData(e.target);
+transactions.push({id:Date.now(),name:f.get("name"),type:f.get("type"),
+amount:Number(f.get("amount")),date:f.get("date")});
+saveAll();render();
+};
+drawTransactions();
 }
 function drawTransactions(){
- document.getElementById("transactionTable").innerHTML=table(["Name","Type","Amount","Date","Action"],transactions.map(t=>`<tr>
- <td>${escapeHTML(t.name)}</td><td>${escapeHTML(t.type)}</td><td>₱${Number(t.amount).toFixed(2)}</td><td>${escapeHTML(t.date)}</td>
- <td><button class="danger small" onclick="deleteTransaction(${t.id})">Delete</button></td></tr>`).join(""));
+let el=document.getElementById("transactionTable");if(!el)return;
+el.innerHTML=table(["Name","Type","Amount","Date","Action"],
+transactions.map(t=>`<tr><td>${safe(t.name)}</td><td>${safe(t.type)}</td>
+<td>₱${Number(t.amount).toFixed(2)}</td><td>${safe(t.date)}</td>
+<td><button class="danger small" onclick="deleteTransaction(${t.id})">Delete</button></td></tr>`).join(""));
 }
-function deleteTransaction(id){if(confirm("Delete transaction?")){transactions=transactions.filter(t=>t.id!==id);saveAll();render();}}
+function deleteTransaction(id){
+if(confirm("Delete transaction?")){
+transactions=transactions.filter(t=>t.id!==id);saveAll();render();
+}}
 
 function renderReports(c){
- let total=transactions.reduce((s,t)=>s+Number(t.amount),0);
- let pending=documents.filter(d=>d.status==="Pending").length;
- c.innerHTML=`
- <div class="stats">
- ${stat("Total Residents",residents.length)}
- ${stat("Total Documents",documents.length)}
- ${stat("Pending Requests",pending)}
- ${stat("Total Transactions",transactions.length)}
- </div>
- <div class="card"><h3>Transaction Summary</h3>
- <h2>₱${total.toFixed(2)}</h2><p class="notice">Total amount recorded in transactions.</p>
- <button onclick="window.print()">Print Report</button>
- </div>`;
+let total=transactions.reduce((sum,t)=>sum+Number(t.amount),0);
+let pending=documents.filter(d=>d.status==="Pending").length;
+c.innerHTML=`
+<div class="stats">
+${stat("Total Residents",residents.length)}
+${stat("Total Documents",documents.length)}
+${stat("Pending Requests",pending)}
+${stat("Total Transactions",transactions.length)}
+</div>
+<div class="card"><h3>Transaction Summary</h3>
+<h2>₱${total.toFixed(2)}</h2>
+<button onclick="window.print()">Print Report</button></div>`;
 }
 
 function renderUsers(c){
- c.innerHTML=`
- <div class="card"><h3>Add User</h3>
- <form id="userForm"><div class="form-grid">
- <div><label>Full Name</label><input name="name" required></div>
- <div><label>Username</label><input name="username" required></div>
- <div><label>Role</label><select name="role"><option>Staff</option><option>Administrator</option></select></div>
- </div><button>Add User</button></form>
- <p class="notice">Demo only: this page does not create secure login accounts.</p></div>
- <div class="card"><h3>Users</h3><div id="userTable"></div></div>`;
- document.getElementById("userForm").onsubmit=e=>{
- e.preventDefault();let f=new FormData(e.target);
- users.push({id:Date.now(),name:f.get("name"),username:f.get("username"),role:f.get("role")});
- saveAll();render();
- };
- document.getElementById("userTable").innerHTML=table(["Name","Username","Role","Action"],users.map(u=>`<tr>
- <td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.username)}</td><td>${escapeHTML(u.role)}</td>
- <td><button class="danger small" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join(""));
+c.innerHTML=`
+<div class="card"><h3>Registered Accounts</h3>
+<p class="notice">List of accounts registered in this browser.</p>
+<div id="userTable"></div></div>`;
+document.getElementById("userTable").innerHTML=
+table(["Full Name","Username","Role"],
+accounts.map(a=>`<tr><td>${safe(a.name)}</td>
+<td>${safe(a.username)}</td><td>${safe(a.role)}</td></tr>`).join(""));
 }
-function deleteUser(id){if(confirm("Delete user?")){users=users.filter(u=>u.id!==id);saveAll();render();}}
 
 function renderSettings(c){
- c.innerHTML=`
- <div class="card"><h3>Barangay Information</h3>
- <form id="settingsForm">
- <label>Barangay / Office Name</label><input name="name" value="${escapeHTML(settings.name)}" required>
- <label>Address</label><input name="address" value="${escapeHTML(settings.address)}">
- <label>Contact Number</label><input name="contact" value="${escapeHTML(settings.contact)}">
- <button>Save Settings</button></form></div>`;
- document.getElementById("settingsForm").onsubmit=e=>{
- e.preventDefault();let f=new FormData(e.target);
- settings={name:f.get("name"),address:f.get("address"),contact:f.get("contact")};
- saveAll();alert("Settings saved!");render();
- };
+c.innerHTML=`
+<div class="card"><h3>Barangay Information</h3>
+<form id="settingsForm">
+<label>Barangay / Office Name</label>
+<input name="name" value="${safe(settings.name)}" required>
+<label>Address</label>
+<input name="address" value="${safe(settings.address)}">
+<label>Contact Number</label>
+<input name="contact" value="${safe(settings.contact)}">
+<button>Save Settings</button></form></div>`;
+document.getElementById("settingsForm").onsubmit=e=>{
+e.preventDefault();let f=new FormData(e.target);
+settings={name:f.get("name"),address:f.get("address"),contact:f.get("contact")};
+saveAll();alert("Settings saved!");render();
+};
 }
-function renderDashboardStats(){
- if(currentPage==="dashboard")render();
+
+if(sessionStorage.getItem("bms_logged")==="yes"){
+openApplication();
+}else{
+showLogin();
 }
-if(loggedIn)showApp();
 </script>
 </body>
 </html>
