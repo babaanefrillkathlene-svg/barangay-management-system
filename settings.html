@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Settings</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f6f9;color:#333}
+header{background:#123b2a;color:white;padding:24px 30px}
+main{padding:30px;max-width:850px}
+.panel{background:white;padding:25px;border-radius:10px;margin-bottom:20px}
+h2{color:#123b2a}
+label{display:block;margin-top:15px}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;margin-top:8px}
+button{background:#17643e;color:white;padding:12px 20px;border:0;border-radius:6px;cursor:pointer;margin-top:18px}
+</style>
+</head>
+<body>
+<header>
+<h2 style="color:white">Barangay Management System</h2>
+<p>System Settings</p>
+</header>
+<main>
+<div class="panel">
+<h2>Barangay Information</h2>
+<form id="settingsForm">
+<label>Barangay Name</label>
+<input id="barangay" placeholder="Enter barangay name" required>
+<label>Municipality / City</label>
+<input id="city" placeholder="Enter municipality or city" required>
+<label>Province</label>
+<input id="province" placeholder="Enter province" required>
+<label>Contact Number</label>
+<input id="contact" type="tel" placeholder="Enter contact number">
+<label>Barangay Email</label>
+<input id="email" type="email" placeholder="Enter email address">
+<button type="submit">Save Settings</button>
+</form>
+</div>
+<div class="panel">
+<h2>System Information</h2>
+<p>System Name: Barangay Management System</p>
+<p>Version: 1.0</p>
+<p>Platform: Web-Based Application</p>
+<p>Database: Pending Backend Integration</p>
+</div>
+</main>
+<script>
+document.getElementById("settingsForm").addEventListener("submit",function(e){
+e.preventDefault();
+alert("Settings are not yet connected to the database. Backend integration is required to save them permanently.");
+});
+</script>
+</body>
+</html>
