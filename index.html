@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Barangay Management System</title>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+        body {
+
+            background: #f4f6f9;
+
+            display: flex;
+
+        }
+
+        .sidebar {
+
+            width: 250px;
+
+            height: 100vh;
+
+            background: #123b2a;
+
+            color: white;
+
+            padding: 25px 15px;
+
+            position: fixed;
+
+        }
+
+        .sidebar h2 {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+            font-size: 21px;
+
+        }
+
+        .sidebar a {
+
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 14px;
+
+            margin-bottom: 8px;
+
+            border-radius: 6px;
+
+        }
+
+        .sidebar a:hover,
+
+        .sidebar a.active {
+
+            background: #246b49;
+
+        }
+
+        .main {
+
+            margin-left: 250px;
+
+            padding: 30px;
+
+            width: calc(100% - 250px);
+
+        }
+
+        .header {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        .header h1 {
+
+            color: #123b2a;
+
+            font-size: 24px;
+
+        }
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+        }
+
+        .card h3 {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .card h2 {
+
+            color: #123b2a;
+
+            font-size: 30px;
+
+        }
+
+        .section {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            margin-top: 25px;
+
+        }
+
+        .section h2 {
+
+            color: #123b2a;
+
+            margin-bottom: 15px;
+
+        }
+
+        .section p {
+
+            color: #666;
+
+            line-height: 1.8;
+
+        }
+
+        @media(max-width: 800px) {
+
+            .sidebar {
+
+                width: 180px;
+
+            }
+
+            .main {
+
+                margin-left: 180px;
+
+                width: calc(100% - 180px);
+
+                padding: 15px;
+
+            }
+
+            .cards {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+        @media(max-width: 500px) {
+
+            .sidebar {
+
+                width: 65px;
+
+                padding: 15px 5px;
+
+            }
+
+            .sidebar h2 {
+
+                font-size: 10px;
+
+            }
+
+            .sidebar a {
+
+                font-size: 10px;
+
+                padding: 10px 3px;
+
+                text-align: center;
+
+            }
+
+            .main {
+
+                margin-left: 65px;
+
+                width: calc(100% - 65px);
+
+            }
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>BARANGAY SYSTEM</h2>
+
+        <a href="#" class="active">Dashboard</a>
+
+        <a href="#">Residents</a>
+
+        <a href="#">Documents</a>
+
+        <a href="#">Transactions</a>
+
+        <a href="#">Reports</a>
+
+        <a href="#">User Management</a>
+
+        <a href="#">Settings</a>
+
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+
+            <h1>Dashboard</h1>
+
+            <span>Administrator</span>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>Total Residents</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Documents Issued</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Pending Requests</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Total Transactions</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Welcome to Barangay Management System</h2>
+
+            <p>
+
+                This system is designed to manage barangay
+
+                residents, document requests, transactions,
+
+                and administrative records in one centralized
+
+                platform.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
