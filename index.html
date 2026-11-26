@@ -1,351 +1,312 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Barangay Management System</title>
-
-    <style>
-
-        * {
-
-            margin: 0;
-
-            padding: 0;
-
-            box-sizing: border-box;
-
-            font-family: Arial, sans-serif;
-
-        }
-
-        body {
-
-            background: #f4f6f9;
-
-            display: flex;
-
-        }
-
-        .sidebar {
-
-            width: 250px;
-
-            height: 100vh;
-
-            background: #123b2a;
-
-            color: white;
-
-            padding: 25px 15px;
-
-            position: fixed;
-
-        }
-
-        .sidebar h2 {
-
-            text-align: center;
-
-            margin-bottom: 35px;
-
-            font-size: 21px;
-
-        }
-
-        .sidebar a {
-
-            display: block;
-
-            color: white;
-
-            text-decoration: none;
-
-            padding: 14px;
-
-            margin-bottom: 8px;
-
-            border-radius: 6px;
-
-        }
-
-        .sidebar a:hover,
-
-        .sidebar a.active {
-
-            background: #246b49;
-
-        }
-
-        .main {
-
-            margin-left: 250px;
-
-            padding: 30px;
-
-            width: calc(100% - 250px);
-
-        }
-
-        .header {
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            margin-bottom: 25px;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-        }
-
-        .header h1 {
-
-            color: #123b2a;
-
-            font-size: 24px;
-
-        }
-
-        .cards {
-
-            display: grid;
-
-            grid-template-columns: repeat(4, 1fr);
-
-            gap: 20px;
-
-        }
-
-        .card {
-
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-
-        }
-
-        .card h3 {
-
-            color: #777;
-
-            font-size: 14px;
-
-            margin-bottom: 15px;
-
-        }
-
-        .card h2 {
-
-            color: #123b2a;
-
-            font-size: 30px;
-
-        }
-
-        .section {
-
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            margin-top: 25px;
-
-        }
-
-        .section h2 {
-
-            color: #123b2a;
-
-            margin-bottom: 15px;
-
-        }
-
-        .section p {
-
-            color: #666;
-
-            line-height: 1.8;
-
-        }
-
-        @media(max-width: 800px) {
-
-            .sidebar {
-
-                width: 180px;
-
-            }
-
-            .main {
-
-                margin-left: 180px;
-
-                width: calc(100% - 180px);
-
-                padding: 15px;
-
-            }
-
-            .cards {
-
-                grid-template-columns: repeat(2, 1fr);
-
-            }
-
-        }
-
-        @media(max-width: 500px) {
-
-            .sidebar {
-
-                width: 65px;
-
-                padding: 15px 5px;
-
-            }
-
-            .sidebar h2 {
-
-                font-size: 10px;
-
-            }
-
-            .sidebar a {
-
-                font-size: 10px;
-
-                padding: 10px 3px;
-
-                text-align: center;
-
-            }
-
-            .main {
-
-                margin-left: 65px;
-
-                width: calc(100% - 65px);
-
-            }
-
-            .cards {
-
-                grid-template-columns: 1fr;
-
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barangay Management System</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f3f6f4;color:#26352b}
+.sidebar{width:240px;background:#145c35;color:white;position:fixed;inset:0 auto 0 0;padding:22px 14px;overflow:auto}
+.sidebar h2{text-align:center;font-size:19px;margin:8px 0 28px}
+.nav{display:block;width:100%;padding:13px 15px;margin:5px 0;border:0;border-radius:7px;background:transparent;color:white;text-align:left;font-size:15px;cursor:pointer}
+.nav:hover,.nav.active{background:#26834d}
+.main{margin-left:240px;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+header h1{margin:0;font-size:26px}
+header p{color:#718078;margin-bottom:0}
+.card{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 8px #0000000c;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.stat h3{font-size:14px;color:#68776e}
+.stat strong{font-size:30px;color:#17663a}
+button,.btn{background:#17663a;color:white;border:0;padding:10px 15px;border-radius:6px;cursor:pointer}
+button:hover,.btn:hover{background:#104b2a}
+input,select,textarea{padding:11px;border:1px solid #ccd5ce;border-radius:6px;width:100%;margin:6px 0 13px}
+label{font-size:14px;font-weight:bold}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+table{width:100%;border-collapse:collapse;margin-top:15px;min-width:600px}
+th,td{padding:12px;border-bottom:1px solid #e4e9e5;text-align:left;font-size:14px}
+th{background:#edf5ef}
+.table-wrap{overflow-x:auto}
+.danger{background:#b83232}
+.secondary{background:#65736a}
+.small{padding:6px 9px;font-size:12px}
+.notice{color:#68776e;font-size:13px}
+.hidden{display:none}
+#loginScreen{max-width:380px;margin:10vh auto}
+#loginScreen h2{text-align:center;color:#17663a}
+@media(max-width:700px){
+.sidebar{position:relative;width:100%;height:auto}
+.sidebar h2{margin-bottom:12px}
+.main{margin:0;padding:16px}
+header{align-items:flex-start;flex-direction:column}
+}
+</style>
 </head>
 
 <body>
 
-    <div class="sidebar">
+<div id="loginScreen" class="card">
+<h2>BARANGAY MANAGEMENT SYSTEM</h2>
+<p>Administrator Login</p>
+<label>Username</label>
+<input id="loginUser" placeholder="Enter username">
+<label>Password</label>
+<input id="loginPass" type="password" placeholder="Enter password">
+<button onclick="login()">Login</button>
+<p class="notice">Demo account: admin / admin123</p>
+</div>
 
-        <h2>BARANGAY SYSTEM</h2>
+<div id="application" class="hidden">
+<aside class="sidebar">
+<h2>BARANGAY SYSTEM</h2>
+<button class="nav active" data-page="dashboard">Dashboard</button>
+<button class="nav" data-page="residents">Residents</button>
+<button class="nav" data-page="documents">Documents</button>
+<button class="nav" data-page="transactions">Transactions</button>
+<button class="nav" data-page="reports">Reports</button>
+<button class="nav" data-page="users">User Management</button>
+<button class="nav" data-page="settings">Settings</button>
+<button class="nav" onclick="logout()">Logout</button>
+</aside>
 
-        <a href="#" class="active">Dashboard</a>
+<main class="main">
+<header>
+<div>
+<h1 id="pageTitle">Dashboard</h1>
+<p>Barangay Management System</p>
+</div>
+<div id="currentUser">Administrator</div>
+</header>
+<div id="content"></div>
+</main>
+</div>
 
-        <a href="#">Residents</a>
+<script>
+const getData = key => JSON.parse(localStorage.getItem(key) || "[]");
+const saveData = (key,data) => localStorage.setItem(key,JSON.stringify(data));
 
-        <a href="#">Documents</a>
+let residents=getData("bms_residents");
+let documents=getData("bms_documents");
+let transactions=getData("bms_transactions");
+let users=getData("bms_users");
+let settings=JSON.parse(localStorage.getItem("bms_settings") || '{"name":"Barangay Office","address":"","contact":""}');
 
-        <a href="#">Transactions</a>
+let loggedIn=sessionStorage.getItem("bms_logged") === "yes";
+let currentPage="dashboard";
 
-        <a href="#">Reports</a>
+function showApp(){
+ document.getElementById("loginScreen").classList.add("hidden");
+ document.getElementById("application").classList.remove("hidden");
+ document.getElementById("currentUser").textContent=sessionStorage.getItem("bms_user") || "Administrator";
+ render();
+}
+function login(){
+ let u=document.getElementById("loginUser").value.trim();
+ let p=document.getElementById("loginPass").value;
+ if(u==="admin" && p==="admin123"){
+  sessionStorage.setItem("bms_logged","yes");
+  sessionStorage.setItem("bms_user","Administrator");
+  loggedIn=true;showApp();
+ }else alert("Incorrect username or password.");
+}
+function logout(){
+ sessionStorage.removeItem("bms_logged");
+ sessionStorage.removeItem("bms_user");
+ location.reload();
+}
+function navigate(page){
+ currentPage=page;
+ document.querySelectorAll(".nav[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ render();
+}
+document.querySelectorAll(".nav[data-page]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.page)));
 
-        <a href="#">User Management</a>
+function saveAll(){
+ saveData("bms_residents",residents);
+ saveData("bms_documents",documents);
+ saveData("bms_transactions",transactions);
+ saveData("bms_users",users);
+ localStorage.setItem("bms_settings",JSON.stringify(settings));
+}
+function escapeHTML(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function table(headers,rows){
+ return <div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>).join("")}</tr></thead><tbody>${rows || <tr><td colspan="${headers.length}">No records found.</td></tr>`}</tbody></table></div>;
+}
+function render(){
+ const c=document.getElementById("content");
+ const titles={dashboard:"Dashboard",residents:"Residents",documents:"Documents",transactions:"Transactions",reports:"Reports",users:"User Management",settings:"Settings"};
+ document.getElementById("pageTitle").textContent=titles[currentPage];
 
-        <a href="#">Settings</a>
+ if(currentPage==="dashboard"){
+ c.innerHTML=`
+ <div class="card" style="background:#17663a;color:white">
+ <h2>Welcome to ${escapeHTML(settings.name)}!</h2>
+ <p>Manage your barangay records in one place.</p></div>
+ <div class="stats">
+ ${stat("Total Residents",residents.length)}
+ ${stat("Document Requests",documents.length)}
+ ${stat("Transactions",transactions.length)}
+ ${stat("Registered Users",users.length)}
+ </div>
+ <div class="card"><h3>Quick Access</h3>
+ <button onclick="navigate('residents')">Manage Residents</button>
+ <button onclick="navigate('documents')">Documents</button>
+ <button onclick="navigate('transactions')">Transactions</button>
+ <button onclick="navigate('reports')">View Reports</button>
+ </div>`;
+ }
+ if(currentPage==="residents") renderResidents(c);
+ if(currentPage==="documents") renderDocuments(c);
+ if(currentPage==="transactions") renderTransactions(c);
+ if(currentPage==="reports") renderReports(c);
+ if(currentPage==="users") renderUsers(c);
+ if(currentPage==="settings") renderSettings(c);
+}
+function stat(name,value){
+ return <div class="card stat"><h3>${name}</h3><strong>${value}</strong></div>;
+}
 
-    </div>
+function renderResidents(c){
+ c.innerHTML=`
+ <div class="card"><h3>Add Resident</h3>
+ <form id="residentForm">
+ <div class="form-grid">
+ <div><label>Full Name</label><input name="name" required></div>
+ <div><label>Age</label><input name="age" type="number" min="0" required></div>
+ <div><label>Address</label><input name="address" required></div>
+ <div><label>Contact Number</label><input name="contact"></div>
+ </div><button>Add Resident</button></form></div>
+ <div class="card"><h3>Resident Records</h3>
+ <input id="residentSearch" placeholder="Search resident..." oninput="filterResidents()">
+ <div id="residentTable"></div></div>`;
+ document.getElementById("residentForm").onsubmit=e=>{
+ e.preventDefault();let f=new FormData(e.target);
+ residents.push({id:Date.now(),name:f.get("name"),age:f.get("age"),address:f.get("address"),contact:f.get("contact")});
+ saveAll();renderResidents(c);renderDashboardStats();
+ };
+ drawResidents();
+}
+function drawResidents(list=residents){
+ document.getElementById("residentTable").innerHTML=table(["Name","Age","Address","Contact","Action"],list.map(r=>`<tr>
+ <td>${escapeHTML(r.name)}</td><td>${escapeHTML(r.age)}</td><td>${escapeHTML(r.address)}</td><td>${escapeHTML(r.contact)}</td>
+ <td><button class="danger small" onclick="deleteResident(${r.id})">Delete</button></td></tr>`).join(""));
+}
+function filterResidents(){
+ let q=document.getElementById("residentSearch").value.toLowerCase();
+ drawResidents(residents.filter(r=>(r.name+" "+r.address).toLowerCase().includes(q)));
+}
+function deleteResident(id){
+ if(confirm("Delete this resident?")){residents=residents.filter(r=>r.id!==id);saveAll();render();}
+}
 
-    <div class="main">
+function renderDocuments(c){
+ c.innerHTML=`
+ <div class="card"><h3>New Document Request</h3>
+ <form id="documentForm"><div class="form-grid">
+ <div><label>Resident Name</label><input name="name" required></div>
+ <div><label>Document Type</label><select name="type"><option>Barangay Clearance</option><option>Certificate of Residency</option><option>Certificate of Indigency</option><option>Business Clearance</option></select></div>
+ <div><label>Purpose</label><input name="purpose" required></div>
+ </div><button>Submit Request</button></form></div>
+ <div class="card"><h3>Document Requests</h3><div id="documentTable"></div></div>`;
+ document.getElementById("documentForm").onsubmit=e=>{
+ e.preventDefault();let f=new FormData(e.target);
+ documents.push({id:Date.now(),name:f.get("name"),type:f.get("type"),purpose:f.get("purpose"),status:"Pending"});
+ saveAll();render();
+ };
+ drawDocuments();
+}
+function drawDocuments(){
+ document.getElementById("documentTable").innerHTML=table(["Resident","Document","Purpose","Status","Action"],documents.map(d=>`<tr>
+ <td>${escapeHTML(d.name)}</td><td>${escapeHTML(d.type)}</td><td>${escapeHTML(d.purpose)}</td>
+ <td><select onchange="updateDocument(${d.id},this.value)"><option ${d.status==="Pending"?"selected":""}>Pending</option><option ${d.status==="Approved"?"selected":""}>Approved</option><option ${d.status==="Released"?"selected":""}>Released</option><option ${d.status==="Rejected"?"selected":""}>Rejected</option></select></td>
+ <td><button class="danger small" onclick="deleteDocument(${d.id})">Delete</button></td></tr>`).join(""));
+}
+function updateDocument(id,status){documents=documents.map(d=>d.id===id?{...d,status}:d);saveAll();}
+function deleteDocument(id){if(confirm("Delete request?")){documents=documents.filter(d=>d.id!==id);saveAll();render();}}
 
-        <div class="header">
+function renderTransactions(c){
+ c.innerHTML=`
+ <div class="card"><h3>Add Transaction</h3>
+ <form id="transactionForm"><div class="form-grid">
+ <div><label>Resident / Customer</label><input name="name" required></div>
+ <div><label>Transaction Type</label><input name="type" placeholder="e.g. Payment" required></div>
+ <div><label>Amount (₱)</label><input name="amount" type="number" min="0" step="0.01" required></div>
+ <div><label>Date</label><input name="date" type="date" required></div>
+ </div><button>Save Transaction</button></form></div>
+ <div class="card"><h3>Transaction History</h3><div id="transactionTable"></div></div>`;
+ document.getElementById("transactionForm").onsubmit=e=>{
+ e.preventDefault();let f=new FormData(e.target);
+ transactions.push({id:Date.now(),name:f.get("name"),type:f.get("type"),amount:Number(f.get("amount")),date:f.get("date")});
+ saveAll();render();
+ };
+ drawTransactions();
+}
+function drawTransactions(){
+ document.getElementById("transactionTable").innerHTML=table(["Name","Type","Amount","Date","Action"],transactions.map(t=>`<tr>
+ <td>${escapeHTML(t.name)}</td><td>${escapeHTML(t.type)}</td><td>₱${Number(t.amount).toFixed(2)}</td><td>${escapeHTML(t.date)}</td>
+ <td><button class="danger small" onclick="deleteTransaction(${t.id})">Delete</button></td></tr>`).join(""));
+}
+function deleteTransaction(id){if(confirm("Delete transaction?")){transactions=transactions.filter(t=>t.id!==id);saveAll();render();}}
 
-            <h1>Dashboard</h1>
+function renderReports(c){
+ let total=transactions.reduce((s,t)=>s+Number(t.amount),0);
+ let pending=documents.filter(d=>d.status==="Pending").length;
+ c.innerHTML=`
+ <div class="stats">
+ ${stat("Total Residents",residents.length)}
+ ${stat("Total Documents",documents.length)}
+ ${stat("Pending Requests",pending)}
+ ${stat("Total Transactions",transactions.length)}
+ </div>
+ <div class="card"><h3>Transaction Summary</h3>
+ <h2>₱${total.toFixed(2)}</h2><p class="notice">Total amount recorded in transactions.</p>
+ <button onclick="window.print()">Print Report</button>
+ </div>`;
+}
 
-            <span>Administrator</span>
+function renderUsers(c){
+ c.innerHTML=`
+ <div class="card"><h3>Add User</h3>
+ <form id="userForm"><div class="form-grid">
+ <div><label>Full Name</label><input name="name" required></div>
+ <div><label>Username</label><input name="username" required></div>
+ <div><label>Role</label><select name="role"><option>Staff</option><option>Administrator</option></select></div>
+ </div><button>Add User</button></form>
+ <p class="notice">Demo only: this page does not create secure login accounts.</p></div>
+ <div class="card"><h3>Users</h3><div id="userTable"></div></div>`;
+ document.getElementById("userForm").onsubmit=e=>{
+ e.preventDefault();let f=new FormData(e.target);
+ users.push({id:Date.now(),name:f.get("name"),username:f.get("username"),role:f.get("role")});
+ saveAll();render();
+ };
+ document.getElementById("userTable").innerHTML=table(["Name","Username","Role","Action"],users.map(u=>`<tr>
+ <td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.username)}</td><td>${escapeHTML(u.role)}</td>
+ <td><button class="danger small" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join(""));
+}
+function deleteUser(id){if(confirm("Delete user?")){users=users.filter(u=>u.id!==id);saveAll();render();}}
 
-        </div>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <h3>Total Residents</h3>
-
-                <h2>0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Documents Issued</h3>
-
-                <h2>0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Pending Requests</h3>
-
-                <h2>0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Total Transactions</h3>
-
-                <h2>0</h2>
-
-            </div>
-
-        </div>
-
-        <div class="section">
-
-            <h2>Welcome to Barangay Management System</h2>
-
-            <p>
-
-                This system is designed to manage barangay
-
-                residents, document requests, transactions,
-
-                and administrative records in one centralized
-
-                platform.
-
-            </p>
-
-        </div>
-
-    </div>
-
+function renderSettings(c){
+ c.innerHTML=`
+ <div class="card"><h3>Barangay Information</h3>
+ <form id="settingsForm">
+ <label>Barangay / Office Name</label><input name="name" value="${escapeHTML(settings.name)}" required>
+ <label>Address</label><input name="address" value="${escapeHTML(settings.address)}">
+ <label>Contact Number</label><input name="contact" value="${escapeHTML(settings.contact)}">
+ <button>Save Settings</button></form></div>`;
+ document.getElementById("settingsForm").onsubmit=e=>{
+ e.preventDefault();let f=new FormData(e.target);
+ settings={name:f.get("name"),address:f.get("address"),contact:f.get("contact")};
+ saveAll();alert("Settings saved!");render();
+ };
+}
+function renderDashboardStats(){
+ if(currentPage==="dashboard")render();
+}
+if(loggedIn)showApp();
+</script>
 </body>
-
 </html>
