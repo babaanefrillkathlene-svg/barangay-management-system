@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Management</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f6f9;color:#333}
+header{background:#123b2a;color:white;padding:24px 30px}
+main{padding:30px}
+h2{color:#123b2a}
+.panel{background:white;padding:25px;border-radius:10px;margin-bottom:25px}
+input,select{width:100%;padding:12px;margin:8px 0 16px;border:1px solid #ccc;border-radius:6px}
+button{background:#17643e;color:white;border:0;padding:11px 17px;border-radius:6px;cursor:pointer}
+table{width:100%;border-collapse:collapse}
+td,th{text-align:left;padding:13px;border-bottom:1px solid #eee}
+th{background:#eaf1ed;color:#123b2a}
+.scroll{overflow-x:auto}
+.delete{background:#b52b2b}
+</style>
+</head>
+<body>
+<header>
+<h2 style="color:white">Barangay Management System</h2>
+<p>User Management</p>
+</header>
+<main>
+<div class="panel">
+<h2>Add System User</h2>
+<form id="userForm">
+<label>Full Name</label>
+<input id="name" required>
+<label>Username</label>
+<input id="username" required>
+<label>Role</label>
+<select id="role">
+<option>Administrator</option>
+<option>Staff</option>
+<option>Encoder</option>
+</select>
+<button type="submit">Add User</button>
+</form>
+</div>
+<div class="panel">
+<h2>System Users</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Action</th></tr></thead>
+<tbody id="userTable"></tbody>
+</table>
+</div>
+</div>
+</main>
+<script>
+let users=[],nextId=1;
+document.getElementById("userForm").addEventListener("submit",function(e){
+e.preventDefault();
+users.push({
+id:nextId++,
+name:document.getElementById("name").value,
+username:document.getElementById("username").value,
+role:document.getElementById("role").value
+});
+this.reset();
+render();
+});
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+document.getElementById("userTable").innerHTML=users.map(u=>`
+<tr><td>${u.id}</td><td>${esc(u.name)}</td><td>${esc(u.username)}</td><td>${esc(u.role)}</td>
+<td><button class="delete" onclick="removeUser(${u.id})">Delete</button></td></tr>`).join("");
+}
+function removeUser(id){
+if(confirm("Delete this user?")){users=users.filter(u=>u.id!==id);render();}
+}
+</script>
+</body>
+</html>
