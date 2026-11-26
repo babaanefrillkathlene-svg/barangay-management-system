@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barangay Reports</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f6f9;color:#333}
+header{background:#123b2a;color:white;padding:24px 30px}
+main{padding:30px}
+h2{color:#123b2a}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px}
+.card{background:white;padding:24px;border-radius:10px;box-shadow:0 2px 8px #0001}
+.card p{color:#777}
+.card h2{font-size:30px}
+button{background:#17643e;color:white;border:0;padding:12px 18px;border-radius:6px;cursor:pointer}
+.panel{background:white;padding:25px;border-radius:10px;margin-top:25px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:14px;border-bottom:1px solid #eee;text-align:left}
+th{background:#eaf1ed;color:#123b2a}
+.scroll{overflow-x:auto;margin-top:15px}
+</style>
+</head>
+<body>
+<header>
+<h2 style="color:white">Barangay Management System</h2>
+<p>Reports and Analytics</p>
+</header>
+<main>
+<h2>Reports Dashboard</h2>
+<div class="cards">
+<div class="card"><p>Total Residents</p><h2 id="residents">0</h2></div>
+<div class="card"><p>Documents Issued</p><h2 id="documents">0</h2></div>
+<div class="card"><p>Pending Requests</p><h2 id="pending">0</h2></div>
+<div class="card"><p>Completed Transactions</p><h2 id="completed">0</h2></div>
+</div>
+<div class="panel">
+<h2>Report Summary</h2>
+<p>This section provides an overview of barangay records and activities.</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Report</th><th>Description</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Resident Records</td><td>Registered resident information</td><td>Available</td></tr>
+<tr><td>Document Requests</td><td>Barangay document applications</td><td>Available</td></tr>
+<tr><td>Transactions</td><td>Barangay service transactions</td><td>Available</td></tr>
+</tbody>
+</table>
+</div>
+<br>
+<button onclick="window.print()">Print Report</button>
+</div>
+</main>
+</body>
+</html>
