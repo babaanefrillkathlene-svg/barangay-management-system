@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transaction Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f9;
+    color: #333;
+}
+
+header {
+    background: #123b2a;
+    color: white;
+    padding: 22px 30px;
+}
+
+.container {
+    padding: 30px;
+}
+
+h2 {
+    color: #123b2a;
+}
+
+.form-box, .table-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    background: #17643e;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #10482d;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #eaf1ed;
+    color: #123b2a;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.delete {
+    background: #b52b2b;
+    padding: 8px 12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2 style="color:white;">Barangay Management System</h2>
+    <p>Transaction Management</p>
+</header>
+
+<div class="container">
+
+    <h2>Transaction Records</h2>
+
+    <div class="form-box">
+
+        <h2>Add New Transaction</h2>
+
+        <form id="transactionForm">
+
+            <label>Resident Name</label>
+            <input type="text" id="residentName" required>
+
+            <label>Transaction Type</label>
+            <select id="transactionType" required>
+                <option value="">Select Transaction</option>
+                <option>Barangay Clearance</option>
+                <option>Certificate of Residency</option>
+                <option>Certificate of Indigency</option>
+                <option>Other Barangay Service</option>
+            </select>
+
+            <label>Amount Paid (₱)</label>
+            <input type="number" id="amount" min="0" step="0.01" value="0" required>
+
+            <label>Transaction Status</label>
+            <select id="status" required>
+                <option>Pending</option>
+                <option>Processing</option>
+                <option>Completed</option>
+                <option>Cancelled</option>
+            </select>
+
+            <button type="submit">Save Transaction</button>
+
+        </form>
+
+    </div>
+
+    <div class="table-box">
+
+        <h2>Transaction History</h2>
+
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Resident Name</th>
+                        <th>Transaction Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let transactions = [];
+let nextId = 1;
+
+document.getElementById("transactionForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const transaction = {
+        id: nextId++,
+        date: new Date().toLocaleDateString(),
+        name: document.getElementById("residentName").value,
+        type: document.getElementById("transactionType").value,
+        amount: Number(document.getElementById("amount").value),
+        status: document.getElementById("status").value
+    };
+
+    transactions.push(transaction);
+
+    this.reset();
+    renderTransactions();
+
+});
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+function renderTransactions() {
+
+    const table = document.getElementById("transactionTable");
+
+    table.innerHTML = "";
+
+    transactions.forEach(t => {
+
+        table.innerHTML += `
+            <tr>
+                <td>TR-${String(t.id).padStart(4, "0")}</td>
+                <td>${t.date}</td>
+                <td>${escapeHTML(t.name)}</td>
+                <td>${escapeHTML(t.type)}</td>
+                <td>₱${t.amount.toFixed(2)}</td>
+                <td class="status">${escapeHTML(t.status)}</td>
+                <td>
+                    <button class="delete"
+                    onclick="deleteTransaction(${t.id})">
+                    Delete
+                    </button>
+                </td>
+            </tr>
+        `;
+
+    });
+
+}
+
+function deleteTransaction(id) {
+
+    if(confirm("Are you sure you want to delete this transaction?")) {
+
+        transactions = transactions.filter(t => t.id !== id);
+
+        renderTransactions();
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
