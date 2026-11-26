@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resident Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f9;
+    color: #333;
+}
+
+header {
+    background: #123b2a;
+    color: white;
+    padding: 22px 30px;
+}
+
+header h2 {
+    margin: 0;
+}
+
+.container {
+    padding: 30px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #17643e;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #10482d;
+}
+
+.search {
+    padding: 12px;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.table-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #eaf1ed;
+    color: #123b2a;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.actions button {
+    margin: 2px;
+    padding: 7px 10px;
+}
+
+.delete {
+    background: #b52b2b;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Barangay Management System</h2>
+    <p>Resident Management</p>
+</header>
+
+<div class="container">
+
+    <div class="top">
+        <h2>Resident Records</h2>
+        <button onclick="openModal()">+ Add Resident</button>
+    </div>
+
+    <input
+        class="search"
+        type="text"
+        id="search"
+        placeholder="Search resident..."
+        oninput="renderResidents()"
+    >
+
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Resident ID</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Contact Number</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="residentTable"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="modal" id="residentModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+
+        <h2>Add Resident</h2>
+
+        <form id="residentForm">
+            <label>Full Name</label>
+            <input type="text" id="name" required>
+
+            <label>Address</label>
+            <input type="text" id="address" required>
+
+            <label>Contact Number</label>
+            <input type="tel" id="contact" required>
+
+            <button type="submit">Save Resident</button>
+        </form>
+    </div>
+</div>
+
+<script>
+let residents = [];
+let nextId = 1;
+
+function openModal() {
+    document.getElementById("residentModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("residentModal").style.display = "none";
+}
+
+document.getElementById("residentForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    residents.push({
+        id: nextId++,
+        name: document.getElementById("name").value,
+        address: document.getElementById("address").value,
+        contact: document.getElementById("contact").value
+    });
+
+    this.reset();
+    closeModal();
+    renderResidents();
+});
+
+function renderResidents() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const table = document.getElementById("residentTable");
+
+    table.innerHTML = "";
+
+    const filtered = residents.filter(r =>
+        r.name.toLowerCase().includes(search) ||
+        r.address.toLowerCase().includes(search)
+    );
+
+    filtered.forEach(r => {
+        table.innerHTML += `
+            <tr>
+                <td>${r.id}</td>
+                <td>${escapeHTML(r.name)}</td>
+                <td>${escapeHTML(r.address)}</td>
+                <td>${escapeHTML(r.contact)}</td>
+                <td class="actions">
+                    <button class="delete" onclick="deleteResident(${r.id})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function deleteResident(id) {
+    if (confirm("Delete this resident?")) {
+        residents = residents.filter(r => r.id !== id);
+        renderResidents();
+    }
+}
+
+function escapeHTML(value) {
+    return value.replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+renderResidents();
+</script>
+
+</body>
+</html>
